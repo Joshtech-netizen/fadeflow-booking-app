@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { format } from 'date-fns';
-import { Calendar, Clock, User, Phone, Scissors } from 'lucide-react';
+import { Clock, User, Phone, Scissors } from 'lucide-react';
 
 export function AdminDashboard() {
   const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchBookings();
-  }, []);
 
   async function fetchBookings() {
     // 🔥 SUPABASE JOIN: Fetch booking AND the related service name
@@ -26,6 +22,11 @@ export function AdminDashboard() {
     
     setLoading(false);
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchBookings();
+  }, []);
 
   async function deleteBooking(id: number) {
     if(!confirm("Cancel this appointment?")) return;
