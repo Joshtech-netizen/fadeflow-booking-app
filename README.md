@@ -47,7 +47,8 @@ This project is being actively developed. Upcoming features include:
 * **[ ] Authentication: User accounts for booking history.
 
 👤 Author
-Joshua Kwakye Aspiring Full-Stack Engineer
+*Joshua Kwakye 
+*Aspiring Full-Stack Engineer
 
 GitHub Profile
 
