@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { supabase } from './lib/supabase';
 import { Navbar } from './components/Navbar';
 import { BookingModal } from './components/BookingModal';
-import { AdminDashboard } from './components/AdminDashboard'; 
-import { Clock, DollarSign, LayoutDashboard } from 'lucide-react';
+import { AdminDashboard } from './components/AdminDashboard';
+import { Login } from './components/Login'; 
+import { Clock, DollarSign, LayoutDashboard, LogOut } from 'lucide-react';
 
 interface Service {
   id: number;
@@ -17,8 +18,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   
-  // ✅ SECRET SWITCH
+  // 🔐 Authentication States
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     fetchServices();
@@ -43,23 +45,37 @@ function App() {
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500 selection:text-white relative">
       <Navbar />
 
-      {/* 🕵️ ADMIN TOGGLE BUTTON (Temporary for Portfolio) */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <button 
-          onClick={() => setIsAdmin(!isAdmin)}
-          className="bg-slate-800 hover:bg-blue-600 text-white p-4 rounded-full shadow-2xl transition border border-slate-700"
-          title="Toggle Barber View"
-        >
-          <LayoutDashboard className="w-6 h-6" />
-        </button>
-      </div>
+      {/* 🕵️ ADMIN LOGIN BUTTON (Only visible if NOT logged in) */}
+      {!isAdmin && (
+        <div className="fixed bottom-6 right-6 z-50">
+          <button 
+            onClick={() => setShowLogin(true)}
+            className="bg-slate-800 hover:bg-blue-600 text-white p-4 rounded-full shadow-2xl transition border border-slate-700 group"
+            title="Barber Login"
+          >
+            <LayoutDashboard className="w-6 h-6 group-hover:scale-110 transition" />
+          </button>
+        </div>
+      )}
 
-      {/* ✅ CONDITIONAL RENDERING */}
+      {/* 🔀 MAIN CONTENT SWITCHER */}
       {isAdmin ? (
-        <AdminDashboard />
+        /* 🛡️ ADMIN VIEW */
+        <div className="relative">
+          {/* Logout Button */}
+          <button 
+            onClick={() => setIsAdmin(false)}
+            className="absolute top-4 right-6 flex items-center gap-2 text-red-400 hover:text-red-300 font-bold px-4 py-2 rounded-lg hover:bg-red-500/10 transition z-10"
+          >
+            <LogOut className="w-4 h-4" /> Log Out
+          </button>
+          
+          <AdminDashboard />
+        </div>
       ) : (
+        /* 👤 CUSTOMER VIEW */
         <main className="max-w-6xl mx-auto px-6 py-12">
-          {/* HERO */}
+          {/* Hero Section */}
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-4xl md:text-5xl font-extrabold text-white">
               Masterful Cuts, <span className="text-blue-500">Effortless Booking.</span>
@@ -69,7 +85,7 @@ function App() {
             </p>
           </div>
 
-          {/* SERVICES GRID */}
+          {/* Services Grid */}
           {loading ? (
             <div className="text-center text-slate-500 animate-pulse">Loading menu...</div>
           ) : (
@@ -105,11 +121,21 @@ function App() {
         </main>
       )}
 
-      {/* MODAL */}
+      {/* 📅 BOOKING MODAL (For Customers) */}
       {selectedService && (
         <BookingModal 
           service={selectedService} 
           onClose={() => setSelectedService(null)} 
+        />
+      )}
+
+      {/* 🔐 LOGIN MODAL (For Barber) */}
+      {showLogin && (
+        <Login 
+          onLoginSuccess={() => {
+            setIsAdmin(true);   // Unlock Admin Dashboard
+            setShowLogin(false); // Close Login Modal
+          }} 
         />
       )}
     </div>
