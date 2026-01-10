@@ -1,5 +1,5 @@
 import { X, Calendar as CalendarIcon, Clock } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format, addDays, startOfToday } from 'date-fns';
 import { supabase } from '../lib/supabase'; 
 
@@ -21,6 +21,7 @@ export function BookingModal({ service, onClose }: BookingModalProps) {
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [takenSlots, setTakenSlots] = useState<string[]>([]);
 
   // Generate next 5 days
   const nextDates = Array.from({ length: 5 }).map((_, i) => addDays(startOfToday(), i));
@@ -30,6 +31,29 @@ export function BookingModal({ service, onClose }: BookingModalProps) {
     "13:00", "13:30", "14:00", "14:30", "15:00"
   ];
 
+  // 🔍 Check availability whenever the date changes
+  useEffect(() => {
+    async function fetchAvailability() {
+      const dateStr = format(selectedDate, 'yyyy-MM-dd');
+      
+      // Get all bookings for the selected date
+      const { data } = await supabase
+        .from('bookings')
+        .select('appointment_time')
+        .gte('appointment_time', `${dateStr}T00:00:00`)
+        .lte('appointment_time', `${dateStr}T23:59:59`)
+        .eq('status', 'confirmed'); // Only count confirmed bookings
+
+      if (data) {
+        // Convert timestamp (2026-01-10T14:00:00) to just time (14:00)
+        const times = data.map(b => format(new Date(b.appointment_time), 'HH:mm'));
+        setTakenSlots(times);
+      }
+    }
+
+    fetchAvailability();
+  }, [selectedDate]);
+  
   async function handleBooking() {
     if (!selectedTime || !customerName || !customerPhone) {
       alert("Please fill in all details");
@@ -112,29 +136,41 @@ export function BookingModal({ service, onClose }: BookingModalProps) {
             </div>
           </div>
 
-          {/* 2. Time Selection */}
+          {/* ✅ 2. Time Selection (UPDATED WITH STEP 4 LOGIC) */}
           <div className="space-y-3">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
               <Clock className="w-4 h-4" /> Available Slots
             </h3>
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-              {timeSlots.map((time) => (
-                <button
-                  key={time}
-                  onClick={() => setSelectedTime(time)}
-                  className={`py-2 px-3 rounded-lg text-sm font-bold border transition ${
-                    selectedTime === time
-                      ? 'bg-green-600 border-green-500 text-white'
-                      : 'bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-500'
-                  }`}
-                >
-                  {time}
-                </button>
-              ))}
+              {timeSlots.map((time) => {
+                const isTaken = takenSlots.includes(time); // Check if time is booked
+                
+                return (
+                  <button
+                    key={time}
+                    disabled={isTaken} // 🚫 Disable button if taken
+                    onClick={() => setSelectedTime(time)}
+                    className={`py-2 px-3 rounded-lg text-sm font-bold border transition relative ${
+                      isTaken
+                        ? 'bg-slate-800 border-slate-800 text-slate-600 cursor-not-allowed opacity-50' // Disabled Style
+                        : selectedTime === time
+                        ? 'bg-green-600 border-green-500 text-white'
+                        : 'bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-500'
+                    }`}
+                  >
+                    {time}
+                    {isTaken && (
+                       <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1 rounded-full">
+                         BUSY
+                       </span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* 3. User Details Input (Now Connected to State) */}
+          {/* 3. User Details Input */}
           <div className="space-y-4 pt-4 border-t border-slate-800">
              <input 
                type="text" 
