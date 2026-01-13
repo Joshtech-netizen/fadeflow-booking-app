@@ -52,6 +52,7 @@ export function Login({ onLoginSuccess }: LoginProps) {
             <label className="block text-slate-400 text-xs uppercase font-bold mb-2">Email</label>
             <input
               type="email"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:outline-none transition"
@@ -63,6 +64,7 @@ export function Login({ onLoginSuccess }: LoginProps) {
             <label className="block text-slate-400 text-xs uppercase font-bold mb-2">Password</label>
             <input 
               type="password"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:outline-none transition"
