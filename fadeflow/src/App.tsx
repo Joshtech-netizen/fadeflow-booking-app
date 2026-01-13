@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { BookingModal } from './components/BookingModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Login } from './components/Login';
+import { Footer } from './components/Footer';
 import { Clock, DollarSign, LayoutDashboard } from 'lucide-react';
 import { Toaster } from 'react-hot-toast'; 
 
@@ -66,6 +67,7 @@ function App() {
         <AdminDashboard onLogout={() => setIsAdmin(false)} />
           ) : (
         /* 👤 CUSTOMER VIEW */
+        <div className="flex-grow flex flex-col">
         <main className="max-w-6xl mx-auto px-6 py-12" id="services">
           {/* Hero Section */}
           <div className="text-center mb-16 space-y-4">
@@ -111,7 +113,11 @@ function App() {
             </div>
           )}
         </main>
+
+    <Footer />
+    </div>
       )}
+
 
       {/* 📅 BOOKING MODAL (For Customers) */}
       {selectedService && (
