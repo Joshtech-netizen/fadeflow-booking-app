@@ -66,7 +66,7 @@ function App() {
         <AdminDashboard onLogout={() => setIsAdmin(false)} />
           ) : (
         /* 👤 CUSTOMER VIEW */
-        <main className="max-w-6xl mx-auto px-6 py-12">
+        <main className="max-w-6xl mx-auto px-6 py-12" id="services">
           {/* Hero Section */}
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-4xl md:text-5xl font-extrabold text-white">
