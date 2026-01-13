@@ -1,21 +1,37 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { format } from 'date-fns';
-import { Clock, User, Phone, Scissors } from 'lucide-react';
+import { Clock, User, Phone, Scissors, LogOut } from 'lucide-react';
 
-export function AdminDashboard() {
-  const [bookings, setBookings] = useState<any[]>([]);
+// 1. Define the Prop Type
+interface AdminDashboardProps {
+  onLogout: () => void;
+}
+
+interface Booking {
+  id: number;
+  appointment_time: string;
+  customer_name: string;
+  customer_phone: string;
+  services: {
+    name: string;
+    price: number;
+  };
+}
+
+export function AdminDashboard({ onLogout }: AdminDashboardProps) {
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function fetchBookings() {
-    // 🔥 SUPABASE JOIN: Fetch booking AND the related service name
     const { data, error } = await supabase
       .from('bookings')
       .select(`
         *,
         services ( name, price )
       `)
-      .order('appointment_time', { ascending: true }); // Show earliest first
+      .order('appointment_time', { ascending: true });
 
     if (error) console.error(error);
     else setBookings(data || []);
@@ -24,29 +40,39 @@ export function AdminDashboard() {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchBookings();
   }, []);
 
   async function deleteBooking(id: number) {
     if(!confirm("Cancel this appointment?")) return;
-    
     await supabase.from('bookings').delete().eq('id', id);
-    fetchBookings(); // Refresh the list
+    fetchBookings();
   }
 
   return (
     <div className="max-w-4xl mx-auto p-6 text-white">
-      <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-        <Scissors className="text-blue-500" />
-        Barber Dashboard
-      </h2>
+      
+      {/* 2. Header Section (Flexbox handles spacing now) */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-slate-800 pb-6">
+        <h2 className="text-3xl font-bold flex items-center gap-3">
+          <Scissors className="text-blue-500" />
+          Barber Dashboard
+        </h2>
+        
+        {/* Logout Button (Now sits nicely in the layout) */}
+        <button 
+          onClick={onLogout}
+          className="flex items-center gap-2 text-red-400 hover:text-red-300 font-bold px-4 py-2 rounded-lg hover:bg-red-500/10 transition"
+        >
+          <LogOut className="w-4 h-4" /> Log Out
+        </button>
+      </div>
 
       {loading ? (
-        <p>Loading schedule...</p>
+        <div className="text-center text-slate-500 py-12">Loading schedule...</div>
       ) : (
         <div className="space-y-4">
-          {bookings.length === 0 && <p className="text-slate-400">No upcoming appointments.</p>}
+          {bookings.length === 0 && <p className="text-slate-400 text-center py-12">No upcoming appointments.</p>}
           
           {bookings.map((booking) => (
             <div key={booking.id} className="bg-slate-900 border border-slate-800 p-6 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-blue-500/30 transition">
@@ -84,7 +110,7 @@ export function AdminDashboard() {
                 
                 <button 
                   onClick={() => deleteBooking(booking.id)}
-                  className="text-red-400 hover:text-red-300 text-xs font-bold mt-2 underline"
+                  className="text-red-400 hover:text-red-300 text-xs font-bold mt-2 underline text-left md:text-right"
                 >
                   Cancel Appointment
                 </button>
