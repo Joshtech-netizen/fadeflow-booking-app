@@ -1,7 +1,7 @@
 import emailjs from '@emailjs/browser';
 
 // REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS
-const SERVICE_ID = "service_ilmpfhf-EmailJS";
+const SERVICE_ID = "service_ilmpfhf";
 const TEMPLATE_ID = "template_bf8gqax";
 const PUBLIC_KEY = "SoIWsguYYqSlAdVHn";
 
