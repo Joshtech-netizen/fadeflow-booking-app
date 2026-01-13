@@ -3,9 +3,9 @@ import { supabase } from './lib/supabase';
 import { Navbar } from './components/Navbar';
 import { BookingModal } from './components/BookingModal';
 import { AdminDashboard } from './components/AdminDashboard';
-import { Login } from './components/Login'; 
-import { Clock, DollarSign, LayoutDashboard, LogOut } from 'lucide-react';
-import { Toaster } from 'react-hot-toast';
+import { Login } from './components/Login';
+import { Clock, DollarSign, LayoutDashboard } from 'lucide-react';
+import { Toaster } from 'react-hot-toast'; 
 
 interface Service {
   id: number;
@@ -43,9 +43,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500 selection:text-white relative" >
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500 selection:text-white relative">
       <Toaster position="top-center" />
-      <Navbar />`
+      <Navbar />
 
       {/* 🕵️ ADMIN LOGIN BUTTON (Only visible if NOT logged in) */}
       {!isAdmin && (
@@ -63,18 +63,8 @@ function App() {
       {/* 🔀 MAIN CONTENT SWITCHER */}
       {isAdmin ? (
         /* 🛡️ ADMIN VIEW */
-        <div className="relative">
-          {/* Logout Button */}
-          <button 
-            onClick={() => setIsAdmin(false)}
-            className="absolute top-4 right-6 flex items-center gap-2 text-red-400 hover:text-red-300 font-bold px-4 py-2 rounded-lg hover:bg-red-500/10 transition z-10"
-          >
-            <LogOut className="w-4 h-4" /> Log Out
-          </button>
-          
-          <AdminDashboard />
-        </div>
-      ) : (
+        <AdminDashboard onLogout={() => setIsAdmin(false)} />
+          ) : (
         /* 👤 CUSTOMER VIEW */
         <main className="max-w-6xl mx-auto px-6 py-12">
           {/* Hero Section */}
