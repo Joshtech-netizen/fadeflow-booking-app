@@ -5,6 +5,7 @@ import { BookingModal } from './components/BookingModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Login } from './components/Login'; 
 import { Clock, DollarSign, LayoutDashboard, LogOut } from 'lucide-react';
+import { Toaster } from 'react-hot-toast';
 
 interface Service {
   id: number;
@@ -42,8 +43,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500 selection:text-white relative">
-      <Navbar />
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500 selection:text-white relative" >
+      <Toaster position="top-center" />
+      <Navbar />`
 
       {/* 🕵️ ADMIN LOGIN BUTTON (Only visible if NOT logged in) */}
       {!isAdmin && (
