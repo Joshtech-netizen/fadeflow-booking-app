@@ -13,6 +13,13 @@ interface AdminDashboardProps {
 interface Booking {
   id: number;
   appointment_time: string;
+  status: string;
+  customer_name: string;
+  customer_phone: string;
+  services: {
+    name: string;
+    price: number;
+  };
 }
 
 export function AdminDashboard({ onLogout }: AdminDashboardProps) {
