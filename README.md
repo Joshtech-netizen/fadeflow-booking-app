@@ -36,7 +36,8 @@
 | Customer Booking | Admin Dashboard |
 |:---:|:---:|
 | * <img width="1895" height="893" alt="Screenshot 2026-01-14 133319" src="https://github.com/user-attachments/assets/10a70808-579a-406f-88fd-0ff4de809761" />
- * | *<img width="1887" height="907" alt="Screenshot 2026-01-14 132959" src="https://github.com/user-attachments/assets/abdf3bec-198f-4cbc-9753-89e6b1a19bf5" />
+ * |
+ *  *<img width="1887" height="907" alt="Screenshot 2026-01-14 132959" src="https://github.com/user-attachments/assets/abdf3bec-198f-4cbc-9753-89e6b1a19bf5" />
 * |
 ---
 
