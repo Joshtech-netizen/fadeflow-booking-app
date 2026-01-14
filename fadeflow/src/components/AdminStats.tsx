@@ -47,7 +47,7 @@ export function AdminStats({ bookings }: AdminStatsProps) {
       {/* Stat Card 1: Revenue */}
       <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
         <h3 className="text-slate-400 text-sm font-bold uppercase mb-2">Total Revenue</h3>
-        <p className="text-3xl font-extrabold text-white">${totalRevenue.toFixed(2)}</p>
+        <p className="text-3xl font-extrabold text-white">GHs{totalRevenue.toFixed(2)}</p>
       </div>
 
       {/* Stat Card 2: Appointments */}
@@ -64,7 +64,7 @@ export function AdminStats({ bookings }: AdminStatsProps) {
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
               <XAxis dataKey="date" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`} />
+              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `GHs${value}`} />
               <Tooltip 
                 contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', color: '#fff' }}
                 cursor={{ fill: '#1e293b' }}

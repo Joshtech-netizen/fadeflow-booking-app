@@ -113,7 +113,7 @@ function App() {
                           <span>{service.duration_minutes} mins</span>
                         </div>
                         <span className="text-2xl font-bold text-white">
-                          ${service.price}
+                          GHs{service.price}
                         </span>
                       </div>
                     </div>
@@ -122,7 +122,7 @@ function App() {
               )}
             </div>
 
-            {/* ✅ NEW: BARBERS & REVIEWS SECTIONS */}
+            {/* BARBERS & REVIEWS SECTIONS */}
             <Barbers />
             <Reviews />
 
