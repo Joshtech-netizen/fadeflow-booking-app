@@ -39,11 +39,11 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-slate-400">
               <li className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-blue-500" />
-                <span>45 Aarons Way Street, Hampden, Maine</span>
+                <span> Abossey Okai, Accra</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-blue-500" />
-                <span>(754) 123-4567</span>
+                <span>(+233) 242 315 695</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-blue-500" />
