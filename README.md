@@ -1,55 +1,62 @@
-# 💈 FadeFlow - Modern Barber Booking System
+# 💈 FadeFlow - Booking SaaS for Barbers
 
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=3ECF8E)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![FadeFlow Banner](https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=2000)
 
-**FadeFlow** is a full-stack appointment booking application designed to solve the scheduling inefficiencies of modern barber shops. It allows customers to browse services, select dates, and book appointments in real-time, eliminating the need for phone calls and manual scheduling.
+**FadeFlow** is a full-stack scheduling application that helps service businesses automate appointments, manage customers, and track revenue.
 
-Built with a **Serverless Architecture** using Supabase for instant database scalability and real-time capabilities.
-
-## 🚀 Key Features
-
-* **⚡ Real-Time Service Menu:** Dynamic fetching of services and pricing from Supabase.
-* **📅 Interactive Booking Engine:** Custom-built Date & Time picker logic (powered by `date-fns`).
-* **🎨 Responsive UI:** Fully responsive dark-mode interface built with Tailwind CSS.
-* **🔒 Type Safety:** strict TypeScript implementation for robust code quality.
-* **🗄️ Supabase Backend:** Managed PostgreSQL database for handling bookings and service data.
-
-## 🛠️ Tech Stack
-
-* **Frontend:** React (Vite), TypeScript, Tailwind CSS
-* **Backend/DB:** Supabase (PostgreSQL)
-* **Icons:** Lucide React
-* **Utilities:** Date-fns (Calendar logic)
+👉 **[Live Demo](https://fadeflow-booking-app.vercel.app/)**
 
 ---
 
-## 💻 Getting Started
+## 🚀 Key Features
 
-Follow these steps to run the project locally.
+### 👤 Customer Facing
+- **Real-time Availability:** Prevents double-bookings using Supabase logic.
+- **Email Notifications:** Automated confirmation emails via EmailJS.
+- **Responsive Design:** Mobile-first UI built with Tailwind CSS.
 
-### 1. Prerequisites
-* Node.js (v18 or higher)
-* A free [Supabase](https://supabase.com) account
+### 🛡️ Admin Dashboard
+- **Secure Authentication:** Barber login protected by Supabase Auth.
+- **Visual Analytics:** Revenue and booking trends visualized with Recharts.
+- **Appointment Management:** View, manage, and cancel bookings instantly.
 
+---
 
-## 🗺️ Roadmap & Future Improvements
-This project is being actively developed. Upcoming features include:
+## 🛠️ Tech Stack
 
-* **[ ] Booking Logic: Prevent double-bookings by checking database conflicts.
+- **Frontend:** React, TypeScript, Tailwind CSS, Lucide Icons
+- **Backend:** Supabase (PostgreSQL, Auth, Row Level Security)
+- **Deployment:** Vercel (CI/CD)
+- **Utilities:** EmailJS (Notifications), Recharts (Analytics), Date-fns (Time logic)
 
-* **[ ] Admin Dashboard: A secured view for Barbers to manage their schedule.
+---
 
-* **[ ] SMS Notifications: Integration with Twilio for appointment reminders.
+## 📸 Screenshots
 
-* **[ ] Authentication: User accounts for booking history.
+| Customer Booking | Admin Dashboard |
+|:---:|:---:|
+| * <img width="1895" height="893" alt="Screenshot 2026-01-14 133319" src="https://github.com/user-attachments/assets/10a70808-579a-406f-88fd-0ff4de809761" />
+ * | *<img width="1887" height="907" alt="Screenshot 2026-01-14 132959" src="https://github.com/user-attachments/assets/abdf3bec-198f-4cbc-9753-89e6b1a19bf5" />
+* |
+---
 
-👤 Author
-*Joshua Kwakye 
-*Aspiring Full-Stack Engineer
+## 📦 How to Run Locally
 
-GitHub Profile
+1. **Clone the repo**
+   ```bash
+   git clone [https://github.com/Joshtech-netizen/fadeflow.git](https://github.com/Joshtech-netizen/fadeflow.git)
+2. **Install dependencies**
+      npm install
+3. **Set up Environment Variables** Create a .env.local file and add your Supabase & EmailJS keys:
+      VITE_SUPABASE_URL=your_url
+      VITE_SUPABASE_ANON_KEY=your_key
+4. **Run the server**
+      npm run dev
 
-Built with ❤️ in React & Supabase.
+## 🔒 Security
+This project uses Row Level Security (RLS) to ensure that while public users can create bookings, only authenticated admins can delete or view sensitive dashboard data.
+
+## 👤 Author
+**Joshua** - Full Stack Developer
+
+GitHub
